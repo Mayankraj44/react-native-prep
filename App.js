@@ -9,38 +9,48 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [text, setText] = useState("");
+  const [addModalIsVisible, setAddModalIsVisible] = useState(false);
   const [list, setList] = useState([]);
-  function handleTextChange(newVal) {
-    setText(newVal.trim());
+
+  function changeAddModalState(newState) {
+    setAddModalIsVisible(newState);
   }
-  function addGoal() {
-    if (text.trim) {
-      setList((p) => [...p, text]);
-      setText("");
-    }
+
+  function addGoal(goal) {
+    setList((p) => [...p, { text: goal, id: Math.random().toString() }]);
+  }
+
+  function deleteGoalItem(goalId) {
+    setList((currentList) => {
+      return currentList.filter((item) => item?.id !== goalId);
+    });
   }
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputTextBox}
-          placeholder="Your course goal!"
-          onChangeText={handleTextChange}
-          value={text}
+      <View style={styles.addGoalButton}>
+        <Button
+          title="Add Goal"
+          color={"#5e0acc"}
+          onPress={() => changeAddModalState(true)}
         />
-        <Button title="Add Goal" onPress={addGoal} />
       </View>
+      <GoalInput
+        show={addModalIsVisible}
+        addGoal={addGoal}
+        changeModalState={changeAddModalState}
+      />
       <View style={styles.goalContainer}>
         <Text style={styles.goalHeading}> List of Goals</Text>
         <FlatList
           data={list}
           renderItem={(itemData) => (
-            <Text style={styles.goals}>{itemData?.item}</Text>
+            <GoalItem data={itemData} deleteGoalItem={deleteGoalItem} />
           )}
-          keyExtractor={(item, ind) => ind}
+          keyExtractor={(item) => item.id}
         />
       </View>
     </View>
@@ -51,23 +61,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
+    paddingTop: 60,
     paddingHorizontal: 24,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-  inputTextBox: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
+  addGoalButton: {
+    paddingVertical: 20,
   },
   goalContainer: {
     flex: 5,
@@ -76,12 +74,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     color: "blue",
-  },
-  goals: {
-    backgroundColor: "blue",
-    color: "white",
-    marginVertical: 5,
-    padding: 10,
-    borderRadius: 5,
   },
 });
