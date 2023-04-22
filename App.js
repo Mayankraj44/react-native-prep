@@ -30,30 +30,33 @@ export default function App() {
     });
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.addGoalButton}>
-        <Button
-          title="Add Goal"
-          color={"#5e0acc"}
-          onPress={() => changeAddModalState(true)}
+    <>
+      <StatusBar style="auto" />
+      <View style={styles.container}>
+        <View style={styles.addGoalButton}>
+          <Button
+            title="Add Goal"
+            color={"#5e0acc"}
+            onPress={() => changeAddModalState(true)}
+          />
+        </View>
+        <GoalInput
+          show={addModalIsVisible}
+          addGoal={addGoal}
+          changeModalState={changeAddModalState}
         />
+        <View style={styles.goalContainer}>
+          <Text style={styles.goalHeading}> List of Goals</Text>
+          <FlatList
+            data={list}
+            renderItem={(itemData) => (
+              <GoalItem data={itemData} deleteGoalItem={deleteGoalItem} />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
       </View>
-      <GoalInput
-        show={addModalIsVisible}
-        addGoal={addGoal}
-        changeModalState={changeAddModalState}
-      />
-      <View style={styles.goalContainer}>
-        <Text style={styles.goalHeading}> List of Goals</Text>
-        <FlatList
-          data={list}
-          renderItem={(itemData) => (
-            <GoalItem data={itemData} deleteGoalItem={deleteGoalItem} />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    </View>
+    </>
   );
 }
 
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingTop: 60,
     paddingHorizontal: 24,
+    backgroundColor: "#9c74cc",
   },
   addGoalButton: {
     paddingVertical: 20,
