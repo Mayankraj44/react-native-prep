@@ -30,7 +30,7 @@ const GoalInput = ({ show, addGoal, changeModalState }) => {
       <View style={styles.inputContainer}>
         <Image
           style={styles.image}
-          source={require("../assets/images/goals.png")}
+          source={require("../../assets/images/goals.png")}
         />
         <TextInput
           style={styles.inputTextBox}
