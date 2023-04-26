@@ -11,11 +11,13 @@ export default function App() {
   function closeApp() {
     setCurrentApp(null);
   }
+  console.log(StatusBar);
   return (
     <>
       <StatusBar style="auto" />
-      <View style={styles.container}>
-        {!currentApp ? (
+
+      {!currentApp && (
+        <View style={styles.container}>
           <FlatList
             data={APPS}
             renderItem={(itemData) => {
@@ -29,11 +31,11 @@ export default function App() {
               );
             }}
           />
-        ) : (
-          <Button title="Close App" onPress={closeApp} />
-        )}
-        {currentApp && <>{currentApp.render}</>}
-      </View>
+        </View>
+      )}
+      {currentApp && (
+        <View style={styles.appContainer}>{currentApp.render}</View>
+      )}
     </>
   );
 }
@@ -41,12 +43,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
-    paddingTop: 60,
-    paddingHorizontal: 24,
+    paddingTop: 40,
     backgroundColor: "#9c74cc",
   },
   btnContainer: {
     paddingVertical: 5,
+  },
+  appContainer: {
+    flex: 1,
   },
 });
