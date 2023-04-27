@@ -4,7 +4,7 @@ import { COLOR } from "../../../constants/COLOR";
 
 const PrimaryButton = ({ children, style, onPress, ...rest }) => {
   return (
-    <View style={[styles.buttonOuter]}>
+    <View style={[styles.buttonOuter, style]}>
       <Pressable
         style={styles.buttonInner}
         onPress={onPress}

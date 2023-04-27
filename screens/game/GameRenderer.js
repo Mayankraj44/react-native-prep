@@ -15,6 +15,7 @@ import GameOverScreen from "./GameOverScreen";
 
 const GameRenderer = () => {
   const [pickedNumber, setPickedNumber] = useState(null);
+  const [guessCount, setGuessCount] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   function pickedNumberHandler(number) {
     setPickedNumber(number);
@@ -22,14 +23,32 @@ const GameRenderer = () => {
   function makeGameOver() {
     setGameOver(true);
   }
+  function increaseGuessCount() {
+    setGuessCount((p) => p + 1);
+  }
+  function resetGame() {
+    setGameOver(false);
+    setGuessCount(0);
+    setPickedNumber(null);
+  }
   let screen = <StartGameScreen pickedNumberHandler={pickedNumberHandler} />;
   if (pickedNumber) {
     screen = (
-      <GameScreen pickedNumber={pickedNumber} makeGameOver={makeGameOver} />
+      <GameScreen
+        pickedNumber={pickedNumber}
+        makeGameOver={makeGameOver}
+        increaseGuessCount={increaseGuessCount}
+      />
     );
   }
   if (pickedNumber && gameOver) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        pickedNumber={pickedNumber}
+        guessCount={guessCount}
+        resetGame={resetGame}
+      />
+    );
   }
 
   return (

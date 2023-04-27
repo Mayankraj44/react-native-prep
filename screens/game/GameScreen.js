@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import NumberContainer from "../../components/common/NumberContainer/NumberContainer";
 import Title from "../../components/common/Title/Title";
 import { randomNumberGenerator } from "../../utils/utilities";
@@ -11,10 +11,11 @@ import { Ionicons } from "@expo/vector-icons";
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GameScreen = ({ pickedNumber, makeGameOver }) => {
+const GameScreen = ({ pickedNumber, makeGameOver, increaseGuessCount }) => {
   const [currentGuess, setCurrentGuess] = useState(() =>
     randomNumberGenerator(minBoundary, maxBoundary, pickedNumber)
   );
+  const [roundGuesses, setRoundGuesses] = useState([currentGuess]);
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
@@ -42,7 +43,9 @@ const GameScreen = ({ pickedNumber, makeGameOver }) => {
       maxBoundary,
       currentGuess
     );
+    increaseGuessCount();
     setCurrentGuess(newRndNum);
+    setRoundGuesses((current) => [newRndNum, ...current]);
   }
 
   return (
@@ -60,6 +63,19 @@ const GameScreen = ({ pickedNumber, makeGameOver }) => {
           </PrimaryButton>
         </View>
       </Card>
+      <FlatList
+        style={styles.listContainer}
+        data={roundGuesses}
+        renderItem={(itemData) => (
+          <View style={styles.labelBox}>
+            <Text style={styles.labelText}>#{itemData?.index + 1}</Text>
+            <Text style={styles.labelText}>
+              Opponent's Guess {itemData?.item}
+            </Text>
+          </View>
+        )}
+        keyExtractor={(itemData) => itemData}
+      />
     </View>
   );
 };
@@ -71,5 +87,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     marginBottom: 10,
+  },
+
+  labelBox: {
+    borderWidth: 1,
+    backgroundColor: COLOR.yellow500,
+    marginVertical: 2,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    elevation: 2,
+  },
+  labelText: {
+    fontSize: 20,
   },
 });
