@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import PrimaryButton from "../../components/common/PrimaryButton/PrimaryButton";
 import { COLOR } from "../../constants/COLOR";
+import Title from "../../components/common/Title/Title";
+import Card from "../../components/common/Card/Card";
 
 const StartGameScreen = ({ pickedNumberHandler }) => {
   const [number, setNumber] = useState("");
@@ -25,45 +27,42 @@ const StartGameScreen = ({ pickedNumberHandler }) => {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <View style={styles.textInputContainer}>
-        <TextInput
-          style={styles.textInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          onChangeText={textChangeHandler}
-          value={number}
-        />
-      </View>
-      <View style={styles.btnContainer}>
-        <View style={styles.btn}>
-          <PrimaryButton btnStyle={styles.btn} onPress={resetInputHandler}>
-            Reset
-          </PrimaryButton>
+    <View>
+      <Title>Guess my Number</Title>
+      <Card>
+        <View style={styles.textInputContainer}>
+          <Text style={styles.instructionText}>Enter a number</Text>
+          <TextInput
+            style={styles.textInput}
+            maxLength={2}
+            keyboardType="number-pad"
+            onChangeText={textChangeHandler}
+            value={number}
+          />
         </View>
+        <View style={styles.btnContainer}>
+          <View style={styles.btn}>
+            <PrimaryButton btnStyle={styles.btn} onPress={resetInputHandler}>
+              Reset
+            </PrimaryButton>
+          </View>
 
-        <View style={styles.btn}>
-          <PrimaryButton btnStyle={styles.btn} onPress={confirmInputHandler}>
-            Confirm
-          </PrimaryButton>
+          <View style={styles.btn}>
+            <PrimaryButton btnStyle={styles.btn} onPress={confirmInputHandler}>
+              Confirm
+            </PrimaryButton>
+          </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
 
 export default StartGameScreen;
 const styles = StyleSheet.create({
-  inputContainer: {
-    backgroundColor: COLOR.primary500,
-    borderRadius: 5,
-    padding: 16,
-    margin: 24,
-    elevation: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.5,
+  instructionText: {
+    color: "white",
+    fontSize: 20,
   },
   textInputContainer: {
     alignItems: "center",

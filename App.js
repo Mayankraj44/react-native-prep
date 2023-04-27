@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import { APPS } from "./constants/CONST";
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
   function closeApp() {
     setCurrentApp(null);
   }
-  console.log(StatusBar);
+
   return (
     <>
       <StatusBar style="auto" />

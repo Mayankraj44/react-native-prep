@@ -1,8 +1,8 @@
 export function randomNumberGenerator(min, max, exclude) {
-  const randomNumber = Math.floor(Math.random() * (max - min) + min);
-  if (randomNumber === exclude) {
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
+  if (rndNum === exclude) {
     return randomNumberGenerator(min, max, exclude);
   } else {
-    return randomNumber;
+    return rndNum;
   }
 }
