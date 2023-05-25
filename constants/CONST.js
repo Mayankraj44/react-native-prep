@@ -1,5 +1,6 @@
 import GameRenderer from "../screens/game/GameRenderer";
 import GoalsAppRenderer from "../screens/goals/GoalsAppRenderer";
+import MealsHome from "../screens/meals/MealsHome";
 
 export const APPS = [
   {
@@ -13,5 +14,11 @@ export const APPS = [
     name: "Game",
     url: "game-app",
     render: <GameRenderer />,
+  },
+  {
+    key: 3,
+    name: "Meals-app",
+    url: "meals-app",
+    render: <MealsHome />,
   },
 ];
